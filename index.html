@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Locked with Love ❤️ | A Surprise for Alagiii</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Poppins:wght@300;400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+
+  <!-- Canvas Confetti for Midnight Celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at 50% 20%, #2f0d45 0%, #150624 50%, #08020e 100%);
+      min-height: 100vh;
+      color: #fff;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    .font-anime {
+      font-family: 'Mochiy Pop One', cursive, sans-serif;
+    }
+
+    .font-cursive {
+      font-family: 'Sacramento', cursive;
+    }
+
+    /* Ambient Pulsing Glow */
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 35px rgba(255, 105, 180, 0.4), 0 0 80px rgba(236, 72, 153, 0.2);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 60px rgba(255, 105, 180, 0.7), 0 0 120px rgba(236, 72, 153, 0.4);
+        transform: scale(1.02);
+      }
+    }
+
+    .glow-card {
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+
+    /* Heartbeat animation */
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      14% { transform: scale(1.2); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.28); }
+      70% { transform: scale(1); }
+    }
+
+    .animate-heartbeat {
+      animation: heartbeat 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+
+    /* Floating Heart Spawner */
+    .floating-heart {
+      position: fixed;
+      pointer-events: auto;
+      cursor: pointer;
+      z-index: 20;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .floating-heart:hover {
+      transform: scale(1.4);
+    }
+
+    /* Shimmer effect for progress bar */
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .shimmer-bg {
+      background: linear-gradient(90deg, #ec4899 0%, #f472b6 25%, #ffffff 50%, #f472b6 75%, #ec4899 100%);
+      background-size: 200% 100%;
+      animation: shimmer 3s infinite linear;
+    }
+
+    /* Canvas background */
+    #space-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body class="relative flex flex-col items-center justify-between min-h-screen px-4 py-8">
+
+  <!-- Background Particle & Sparkle Canvas -->
+  <canvas id="space-canvas"></canvas>
+
+  <!-- Top Bar: Secret / Aura Controls -->
+  <header class="w-full max-w-4xl flex items-center justify-between z-10 px-2 sm:px-6">
+    <div class="flex items-center space-x-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-pink-500/30 text-xs sm:text-sm font-medium tracking-wide text-pink-200">
+      <span class="inline-block w-2.5 h-2.5 rounded-full bg-pink-500 animate-ping mr-1"></span>
+      Strict Birthday Vault
+    </div>
+
+    <div class="flex items-center space-x-3">
+      <!-- Music Synth Toggle -->
+      <button id="sound-btn" class="flex items-center space-x-1.5 bg-pink-600/30 hover:bg-pink-600/50 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-pink-400/40 text-xs sm:text-sm font-medium text-pink-100 transition-all active:scale-95">
+        <span id="sound-icon">🎵</span>
+        <span id="sound-text">Play Melody</span>
+      </button>
+
+      <!-- Envelope Hint -->
+      <button id="letter-btn" class="bg-white/10 hover:bg-white/20 backdrop-blur-md p-2 rounded-full border border-white/20 text-pink-200 text-sm transition-all hover:scale-110 active:scale-95" title="Love Letter Teaser">
+        💌
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Centerpiece Card -->
+  <main class="w-full max-w-2xl my-auto z-10 py-6">
+    <div class="glow-card relative bg-white/[0.08] backdrop-blur-2xl border border-white/20 rounded-3xl p-6 sm:p-10 text-center shadow-2xl overflow-hidden">
+      
+      <!-- Top Decorative Accent -->
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-48 h-48 bg-pink-500/30 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Padlock Icon Container -->
+      <div class="relative mx-auto w-20 h-20 sm:w-24 sm:h-24 mb-6 flex items-center justify-center">
+        <!-- Outer Halo -->
+        <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-pink-500 via-rose-400 to-amber-300 opacity-30 blur-md animate-pulse"></div>
+        
+        <!-- Padlock Badge -->
+        <div id="lock-icon-btn" class="relative z-10 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-pink-600 to-rose-500 flex items-center justify-center shadow-lg border-2 border-white/50 cursor-pointer active:scale-90 transition-transform">
+          <svg id="lock-svg" class="w-8 h-8 sm:w-10 sm:h-10 text-white animate-heartbeat drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+            <!-- Heart Padlock Shape -->
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <span class="absolute text-xl select-none pointer-events-none">🔒</span>
+        </div>
+      </div>
+
+      <!-- Title & Greeting -->
+      <div class="space-y-2 mb-8">
+        <h1 class="text-3xl sm:text-5xl font-anime tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-pink-200 via-rose-100 to-pink-300 drop-shadow-md">
+          Hold On, Alagiii❤️
+        </h1>
+        <p class="text-pink-200/90 text-sm sm:text-base font-light max-w-md mx-auto leading-relaxed">
+          The magic birthday door opens automatically the very second the clock strikes <span class="font-semibold text-pink-300">12:00 AM</span>. No peeking before time!
+        </p>
+      </div>
+
+      <!-- Live Interactive Countdown Tiles -->
+      <div id="countdown-tiles" class="grid grid-cols-3 gap-3 sm:gap-6 max-w-lg mx-auto mb-6">
+        
+        <!-- Hours Box -->
+        <div class="relative bg-black/30 backdrop-blur-md rounded-2xl p-3 sm:p-5 border border-pink-500/30 shadow-inner flex flex-col items-center">
+          <div class="text-3xl sm:text-5xl font-anime text-pink-100 tracking-wider font-bold drop-shadow-[0_0_12px_rgba(244,114,182,0.8)]" id="cd-hours">
+            00
+          </div>
+          <span class="text-[10px] sm:text-xs uppercase tracking-widest text-pink-300/80 font-semibold mt-1">Hours</span>
+        </div>
+
+        <!-- Minutes Box -->
+        <div class="relative bg-black/30 backdrop-blur-md rounded-2xl p-3 sm:p-5 border border-pink-500/30 shadow-inner flex flex-col items-center">
+          <div class="text-3xl sm:text-5xl font-anime text-pink-100 tracking-wider font-bold drop-shadow-[0_0_12px_rgba(244,114,182,0.8)]" id="cd-minutes">
+            00
+          </div>
+          <span class="text-[10px] sm:text-xs uppercase tracking-widest text-pink-300/80 font-semibold mt-1">Minutes</span>
+        </div>
+
+        <!-- Seconds Box -->
+        <div class="relative bg-black/30 backdrop-blur-md rounded-2xl p-3 sm:p-5 border border-pink-500/30 shadow-inner flex flex-col items-center">
+          <div class="text-3xl sm:text-5xl font-anime text-pink-100 tracking-wider font-bold drop-shadow-[0_0_12px_rgba(244,114,182,0.8)]" id="cd-seconds">
+            00
+          </div>
+          <span class="text-[10px] sm:text-xs uppercase tracking-widest text-pink-300/80 font-semibold mt-1">Seconds</span>
+        </div>
+
+      </div>
+
+      <!-- Tenths / Milliseconds energetic runner -->
+      <div class="inline-flex items-center space-x-2 text-xs sm:text-sm font-mono text-pink-300/90 bg-pink-950/40 px-4 py-1 rounded-full border border-pink-500/20 mb-6">
+        <span>High-Precision Sync:</span>
+        <span id="cd-millis" class="text-pink-100 font-bold">.00</span>
+      </div>
+
+      <!-- Love Progress Bar -->
+      <div class="max-w-md mx-auto mb-4">
+        <div class="flex justify-between text-xs text-pink-200/80 mb-1.5 font-medium">
+          <span>Love Distance to Nov 8</span>
+          <span id="progress-percent">Synchronizing...</span>
+        </div>
+        <div class="w-full h-3 bg-black/40 rounded-full overflow-hidden p-0.5 border border-pink-500/30">
+          <div id="progress-fill" class="h-full rounded-full shimmer-bg transition-all duration-300" style="width: 50%;"></div>
+        </div>
+      </div>
+
+      <!-- Status Footer Badge -->
+      <div class="flex items-center justify-center space-x-2 text-xs text-pink-300/80 mt-4">
+        <svg class="w-3.5 h-3.5 text-pink-400 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+        <span id="status-text">Synchronizing remaining time to November 8, 2026, 12:00 AM...</span>
+      </div>
+
+      <!-- Unlocking Banner (Hidden until 12:00 AM) -->
+      <div id="unlock-banner" class="hidden mt-6 p-5 rounded-2xl bg-gradient-to-r from-pink-600 via-rose-500 to-pink-600 text-white font-anime text-lg sm:text-xl shadow-xl animate-bounce text-center">
+        <p>🎉 IT'S MIDNIGHT! HAPPY BIRTHDAY ALAGIII! ❤️</p>
+        <a href="birthday.html" class="inline-block mt-3 text-sm bg-white text-pink-600 font-bold px-6 py-2.5 rounded-full shadow-lg hover:bg-pink-50 hover:scale-105 transition-transform active:scale-95">
+          Enter Celebration Now ✨
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Interactive Mini Game / Love Floating Heart Activity -->
+  <footer class="w-full max-w-md z-10 text-center space-y-2">
+    <div class="flex items-center justify-center space-x-3 text-xs sm:text-sm text-pink-200/80 bg-white/5 backdrop-blur-md py-2 px-4 rounded-full border border-white/10 mx-auto w-fit">
+      <span>Catch floating hearts:</span>
+      <span id="hearts-count" class="font-bold text-pink-400 bg-pink-950/60 px-2 py-0.5 rounded-full">0 caught</span>
+    </div>
+    <p class="text-[11px] text-pink-300/50">Touch or click anywhere on screen to create glowing love sparks ✨</p>
+  </footer>
+
+  <!-- Love Letter Modal -->
+  <div id="letter-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-gradient-to-b from-[#2a0c3b] to-[#160620] border-2 border-pink-400/40 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative text-center">
+      <button id="close-letter-btn" class="absolute top-4 right-4 text-pink-300 hover:text-white text-xl">✕</button>
+      <div class="text-4xl mb-3">💌</div>
+      <h3 class="font-anime text-xl text-pink-200 mb-4">A Note Before Midnight</h3>
+      <div class="text-sm text-pink-100/90 font-light leading-relaxed space-y-3 text-left bg-black/30 p-4 rounded-xl border border-pink-500/20">
+        <p>Dear Alagiii,</p>
+        <p>Every single frame, photo, and sweet line on this website was crafted with endless love specifically to celebrate you.</p>
+        <p>The gates are strictly sealed until <strong>November 8, 2026, 12:00:00 AM</strong> sharp. As soon as the clock strikes midnight, your surprise will open automatically!</p>
+        <p class="text-right font-cursive text-2xl text-pink-300 pt-2">— Yours Forever ❤️</p>
+      </div>
+      <button id="got-it-btn" class="mt-6 w-full py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 rounded-xl font-semibold text-white shadow-lg transition-transform active:scale-95">
+        I'll Wait Patiently! 🥰
+      </button>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    (function () {
+      // TARGET UNLOCK TIME: November 8, 2026 00:00:00 (12:00 AM midnight local time)
+      const UNLOCK_TIME = new Date(2026, 10, 8, 0, 0, 0, 0).getTime();
+      
+      // Calculate start time anchor for the progress bar (e.g. 2 hours before midnight)
+      const START_TIME_ANCHOR = UNLOCK_TIME - (2 * 60 * 60 * 1000); // 2 hours window
+
+      const hoursEl = document.getElementById('cd-hours');
+      const minutesEl = document.getElementById('cd-minutes');
+      const secondsEl = document.getElementById('cd-seconds');
+      const millisEl = document.getElementById('cd-millis');
+      const progressFill = document.getElementById('progress-fill');
+      const progressPercent = document.getElementById('progress-percent');
+      const statusText = document.getElementById('status-text');
+      const unlockBanner = document.getElementById('unlock-banner');
+      const countdownTiles = document.getElementById('countdown-tiles');
+
+      let unlocked = false;
+
+      function updateCountdown() {
+        const now = Date.now();
+        const diff = UNLOCK_TIME - now;
+
+        if (diff <= 0) {
+          // TIME TO UNLOCK!
+          if (!unlocked) {
+            unlocked = true;
+            hoursEl.textContent = '00';
+            minutesEl.textContent = '00';
+            secondsEl.textContent = '00';
+            millisEl.textContent = '.00';
+            progressFill.style.width = '100%';
+            progressPercent.textContent = '100% Unlocked!';
+            statusText.textContent = 'Portal is now open! Entering...';
+            
+            // Show celebration banner
+            unlockBanner.classList.remove('hidden');
+            
+            // Trigger glorious celebration confetti
+            triggerCelebration();
+
+            // Redirect automatically after 2.5 seconds
+            setTimeout(() => {
+              window.location.replace('birthday.html');
+            }, 2500);
+          }
+          return;
+        }
+
+        // Calculate hours, minutes, seconds, milliseconds
+        const totalSeconds = Math.floor(diff / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        const millis = Math.floor((diff % 1000) / 10);
+
+        hoursEl.textContent = String(hours).padStart(2, '0');
+        minutesEl.textContent = String(minutes).padStart(2, '0');
+        secondsEl.textContent = String(seconds).padStart(2, '0');
+        millisEl.textContent = '.' + String(millis).padStart(2, '0');
+
+        // Update progress bar
+        const totalDuration = UNLOCK_TIME - START_TIME_ANCHOR;
+        const elapsed = now - START_TIME_ANCHOR;
+        let percent = Math.min(100, Math.max(5, Math.floor((elapsed / totalDuration) * 100)));
+        progressFill.style.width = percent + '%';
+        progressPercent.textContent = percent + '% Complete';
+
+        statusText.textContent = `Strictly locked • Nov 8, 2026, 12:00 AM (${hours}h ${minutes}m ${seconds}s left)`;
+
+        requestAnimationFrame(updateCountdown);
+      }
+
+      // Start countdown loop
+      updateCountdown();
+
+      // Celebration Confetti
+      function triggerCelebration() {
+        if (typeof confetti === 'function') {
+          const duration = 3000;
+          const end = Date.now() + duration;
+
+          (function frame() {
+            confetti({
+              particleCount: 5,
+              angle: 60,
+              spread: 55,
+              origin: { x: 0 },
+              colors: ['#ff69b4', '#ff1493', '#ffd700', '#ffffff']
+            });
+            confetti({
+              particleCount: 5,
+              angle: 120,
+              spread: 55,
+              origin: { x: 1 },
+              colors: ['#ff69b4', '#ff1493', '#ffd700', '#ffffff']
+            });
+
+            if (Date.now() < end) {
+              requestAnimationFrame(frame);
+            }
+          })();
+        }
+      }
+
+      // --- Love Letter Modal Interactions ---
+      const letterBtn = document.getElementById('letter-btn');
+      const letterModal = document.getElementById('letter-modal');
+      const closeLetterBtn = document.getElementById('close-letter-btn');
+      const gotItBtn = document.getElementById('got-it-btn');
+
+      function openModal() {
+        letterModal.classList.remove('hidden');
+        requestAnimationFrame(() => {
+          letterModal.classList.remove('opacity-0');
+        });
+      }
+
+      function closeModal() {
+        letterModal.classList.add('opacity-0');
+        setTimeout(() => {
+          letterModal.classList.add('hidden');
+        }, 300);
+      }
+
+      letterBtn.addEventListener('click', openModal);
+      closeLetterBtn.addEventListener('click', closeModal);
+      gotItBtn.addEventListener('click', closeModal);
+      letterModal.addEventListener('click', (e) => {
+        if (e.target === letterModal) closeModal();
+      });
+
+      // --- Secret Admin / Dev Preview Bypass ---
+      // Clicking the lock icon 5 times in 3 seconds asks for preview override
+      let lockClicks = 0;
+      let lockClickTimer = null;
+      const lockBtn = document.getElementById('lock-icon-btn');
+      
+      lockBtn.addEventListener('click', () => {
+        lockClicks++;
+        clearTimeout(lockClickTimer);
+        lockClickTimer = setTimeout(() => { lockClicks = 0; }, 3000);
+        
+        // Heart pulse effect on click
+        lockBtn.style.transform = 'scale(1.25)';
+        setTimeout(() => { lockBtn.style.transform = 'scale(1)'; }, 200);
+
+        if (lockClicks >= 5) {
+          const code = prompt('Enter Creator Passcode to preview early:');
+          if (code === 'secret' || code === 'alagiii') {
+            window.location.href = 'birthday.html?preview=secret';
+          } else if (code) {
+            alert('Incorrect passcode! The surprise remains strictly locked until 12:00 AM ❤️');
+          }
+          lockClicks = 0;
+        }
+      });
+
+      // --- Interactive Sound Atmosphere (Web Audio API Synthesizer) ---
+      let audioCtx = null;
+      let isPlaying = false;
+      let synthInterval = null;
+      const soundBtn = document.getElementById('sound-btn');
+      const soundText = document.getElementById('sound-text');
+      const soundIcon = document.getElementById('sound-icon');
+
+      const chords = [
+        [261.63, 329.63, 392.00, 523.25], // C Major
+        [220.00, 261.63, 329.63, 440.00], // A Minor
+        [174.61, 220.00, 261.63, 349.23], // F Major
+        [196.00, 246.94, 293.66, 392.00]  // G Major
+      ];
+
+      function playChime() {
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime;
+        const chord = chords[Math.floor(Math.random() * chords.length)];
+        chord.forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + i * 0.12);
+          gain.gain.setValueAtTime(0.001, now + i * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.04, now + i * 0.12 + 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.12 + 2.5);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + i * 0.12);
+          osc.stop(now + i * 0.12 + 2.6);
+        });
+      }
+
+      soundBtn.addEventListener('click', () => {
+        if (!isPlaying) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          isPlaying = true;
+          soundText.textContent = 'Melody Playing';
+          soundIcon.textContent = '💖';
+          soundBtn.classList.add('bg-pink-600/70', 'border-pink-300');
+          playChime();
+          synthInterval = setInterval(playChime, 3200);
+        } else {
+          isPlaying = false;
+          soundText.textContent = 'Play Melody';
+          soundIcon.textContent = '🎵';
+          soundBtn.classList.remove('bg-pink-600/70', 'border-pink-300');
+          if (synthInterval) clearInterval(synthInterval);
+        }
+      });
+
+      // --- Interactive Floating Heart Activity & Quotes ---
+      const quotes = [
+        "You make every single second worth waiting for! 💖",
+        "Counting every heartbeat until midnight! 💓",
+        "Something truly magical is waiting for you... ✨",
+        "My Alagiii, my most precious person in the universe! 🌸",
+        "Hold on tight, the best is yet to come! 🎂",
+        "Every second closer to celebrating you! 🎉",
+        "Lock sealed with all my love! 💌"
+      ];
+
+      let heartsCaught = 0;
+      const heartsCountEl = document.getElementById('hearts-count');
+
+      function spawnFloatingHeart() {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart select-none';
+        const hearts = ['💖', '💕', '✨', '🌸', '💘', '💝', '❤️'];
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        
+        const size = 20 + Math.random() * 26;
+        heart.style.fontSize = size + 'px';
+        const startX = Math.random() * (window.innerWidth - 60);
+        heart.style.left = startX + 'px';
+        heart.style.bottom = '-40px';
+        heart.style.opacity = '0.85';
+
+        document.body.appendChild(heart);
+
+        const duration = 6000 + Math.random() * 6000;
+        const drift = (Math.random() - 0.5) * 120;
+        const startTime = performance.now();
+
+        function animateHeart(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = elapsed / duration;
+
+          if (progress >= 1 || !heart.parentElement) {
+            if (heart.parentElement) heart.remove();
+            return;
+          }
+
+          const currentY = progress * (window.innerHeight + 80);
+          const currentX = startX + Math.sin(progress * Math.PI * 3) * drift;
+          heart.style.transform = `translate(${currentX - startX}px, -${currentY}px)`;
+          heart.style.opacity = String(0.9 * (1 - progress * 0.7));
+
+          requestAnimationFrame(animateHeart);
+        }
+
+        requestAnimationFrame(animateHeart);
+
+        // Click to pop!
+        heart.addEventListener('click', (e) => {
+          e.stopPropagation();
+          heartsCaught++;
+          heartsCountEl.textContent = `${heartsCaught} caught`;
+
+          // Show floating quote near click
+          showFloatingQuote(e.clientX, e.clientY);
+
+          // Pop effect
+          heart.remove();
+        });
+      }
+
+      setInterval(spawnFloatingHeart, 1800);
+
+      function showFloatingQuote(x, y) {
+        const quoteEl = document.createElement('div');
+        quoteEl.className = 'fixed pointer-events-none z-50 text-xs sm:text-sm font-semibold text-pink-200 bg-pink-950/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-pink-400/50 shadow-lg';
+        quoteEl.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+        quoteEl.style.left = Math.min(window.innerWidth - 240, Math.max(20, x - 100)) + 'px';
+        quoteEl.style.top = (y - 30) + 'px';
+        quoteEl.style.transition = 'transform 1.8s ease-out, opacity 1.8s ease-out';
+        document.body.appendChild(quoteEl);
+
+        requestAnimationFrame(() => {
+          quoteEl.style.transform = 'translateY(-60px) scale(1.05)';
+          quoteEl.style.opacity = '0';
+        });
+
+        setTimeout(() => { quoteEl.remove(); }, 1800);
+      }
+
+      // --- Cursor Sparkle / Touch Love Trail ---
+      function createSparkle(x, y) {
+        const spark = document.createElement('div');
+        spark.className = 'fixed pointer-events-none z-40 text-sm select-none';
+        const icons = ['✨', '💖', '⭐', '🌸'];
+        spark.textContent = icons[Math.floor(Math.random() * icons.length)];
+        spark.style.left = (x - 8) + 'px';
+        spark.style.top = (y - 8) + 'px';
+        spark.style.transition = 'transform 0.8s ease-out, opacity 0.8s ease-out';
+        document.body.appendChild(spark);
+
+        requestAnimationFrame(() => {
+          const dx = (Math.random() - 0.5) * 40;
+          const dy = -20 - Math.random() * 30;
+          spark.style.transform = `translate(${dx}px, ${dy}px) scale(0.5)`;
+          spark.style.opacity = '0';
+        });
+
+        setTimeout(() => { spark.remove(); }, 800);
+      }
+
+      let lastSparkleTime = 0;
+      window.addEventListener('mousemove', (e) => {
+        const now = performance.now();
+        if (now - lastSparkleTime > 70) {
+          lastSparkleTime = now;
+          createSparkle(e.clientX, e.clientY);
+        }
+      });
+      window.addEventListener('touchmove', (e) => {
+        const touch = e.touches[0];
+        if (touch) createSparkle(touch.clientX, touch.clientY);
+      });
+
+      // --- Background Space & Sakura Canvas ---
+      const canvas = document.getElementById('space-canvas');
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+      let petals = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      // Create Stars
+      for (let i = 0; i < 90; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 2 + 0.5,
+          alpha: Math.random(),
+          speed: 0.005 + Math.random() * 0.015
+        });
+      }
+
+      // Create Petals
+      for (let i = 0; i < 30; i++) {
+        petals.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: 6 + Math.random() * 8,
+          speedX: Math.random() * 1 - 0.5,
+          speedY: 0.6 + Math.random() * 1.2,
+          rot: Math.random() * Math.PI * 2,
+          rotSpeed: 0.01 + Math.random() * 0.02
+        });
+      }
+
+      function drawCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw Twinkling Stars
+        stars.forEach(s => {
+          s.alpha += s.speed;
+          const brightness = (Math.sin(s.alpha) + 1) / 2;
+          ctx.fillStyle = `rgba(255, 215, 235, ${0.2 + brightness * 0.7})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        // Draw Drifting Sakura Petals
+        petals.forEach(p => {
+          p.x += p.speedX;
+          p.y += p.speedY;
+          p.rot += p.rotSpeed;
+
+          if (p.y > canvas.height + 20) {
+            p.y = -20;
+            p.x = Math.random() * canvas.width;
+          }
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = 'rgba(255, 183, 197, 0.45)';
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        });
+
+        requestAnimationFrame(drawCanvas);
+      }
+      requestAnimationFrame(drawCanvas);
+
+    })();
+  </script>
+</body>
+
+</html>
